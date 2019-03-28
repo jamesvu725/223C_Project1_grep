@@ -170,7 +170,7 @@ void putchr_(int ac) {
 void puts_(char *sp) { while (*sp) { putchr_(*sp++); } putchr_('\n'); }
 // prints out the string with colon at the end // for multiple files
 void putsf(char *sp) { while (*sp) { putchr_(*sp++); } putchr_(':'); }
-// used part of global and reworked to use filebuf and linebuf
+// searches for regex in the file and prints out the line if found
 void search(void) {
   char *fp = filebuf, *lp = linebuf; //
   // loops through filebuf and copies each line to linebuf
