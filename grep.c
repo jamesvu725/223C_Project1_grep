@@ -192,6 +192,7 @@ void compile(char* s) {
   }
   peekc = *sp;
   for (;;) {
+    if (ep >= &expbuf[ESIZE]) { puts_("Expression buffer full"); }
     c = *sp++;
 	  if (c == '\0') {
 	    *ep++ = CEOF;
@@ -201,13 +202,15 @@ void compile(char* s) {
     switch (c) {
     case '\\':
       if ((c = *sp++) == '(') {
+        if (nbra >= NBRA) { puts_("Syntax Error"); }
         *bracketp++ = nbra;
 		    *ep++ = CBRA;
 		    *ep++ = nbra++;
 		    continue;
       }
       if (c == ')') {
-		    *ep++ = CKET;
+        if (bracketp <= bracket) { puts_("Syntax Error"); }
+        *ep++ = CKET;
 		    *ep++ = *--bracketp;
 		    continue;
 	    }
